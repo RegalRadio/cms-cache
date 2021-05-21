@@ -1,0 +1,8 @@
+{
+  "private": true,
+  "name": "cms-cache",
+  "version": "1.0.0",
+  "description": "Cloudflare Worker to handle custom caching logic for CMS API responses.",
+  "main": "index.js",
+  "author": "Andrew Barron <hello@awmb.uk>"
+}
