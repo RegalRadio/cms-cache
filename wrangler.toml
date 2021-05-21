@@ -1,6 +1,12 @@
 name = "cms-cache"
 type = "javascript"
 
-account_id = ""
-route = ""
-zone_id = ""
+# Supply Account ID in the CF_ACCOUNT_ID environment variable
+# Supply Zone    ID in the CF_ZONE_ID     environment variable
+routes     = [
+    "www.regalradio.net/cms/shows*",
+    "www.regalradio.net/cms/date*",
+    "www.regalradio.net/cms/sponsors*",
+    "www.regalradio.net/cms/schedule*",
+    "www.regalradio.net/cms/persons*"
+]

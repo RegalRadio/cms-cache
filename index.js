@@ -1,12 +1,40 @@
-addEventListener('fetch', event => {
-  event.respondWith(handleRequest(event.request))
-})
-/**
- * Respond with hello worker text
- * @param {Request} request
- */
 async function handleRequest(request) {
-  return new Response('Hello worker!', {
-    headers: { 'content-type': 'text/plain' },
-  })
+    const cache = caches.default;
+
+    // Check whether the value is already available in the cache
+    let response = await cache.match(request.url)
+
+    if (!response) {
+        // If not in cache, get it from origin
+        response = await fetch(request);
+
+        // If request is cachable, cache it for next time
+        if (request.method === "GET" && isUrlCachable(request.url))
+            cache.put(request.url, response.clone());
+    } else if (response.headers.get("Cache-Max-Age")) {
+        // If serving a response from the cache, we need to update the Cache-Control headers, since Cloudflare
+        // will have overriden them with the domain-level default.  We can calculate the correct browser cache
+        // max age using the Cache-Max-Age provided by the Regal Radio CMS (which Cloudflare won't fiddle with
+        // since it's not a standard cache header) and the age of the cached item. If there's no Cache-Max-Age
+        // header, we skip this and assume the Cloudflare override is okay.
+
+        response = new Response(response.body, response); // Rebuild response object so headers are mutable.
+        let newMaxAge = parseInt(response.headers.get("Cache-Max-Age")) - parseInt(response.headers.get("age"))
+        response.headers.set("Cache-Control", "public, must-revalidate, max-age=" + newMaxAge);
+    }
+
+    return response;
 }
+
+async function isUrlCachable(url) {
+    const urlObj = new URL(url);
+    return     url.pathname.startsWith("/cms/shows")
+            || url.pathname.startsWith("/cms/date")
+            || url.pathname.startsWith("/cms/persons")
+            || url.pathname.startsWith("/cms/schedule")
+            || url.pathname.startsWith("/cms/sponsors")
+}
+
+addEventListener("fetch", event => {
+    return event.respondWith(handleRequest(event.request))
+})
