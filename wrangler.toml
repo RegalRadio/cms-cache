@@ -2,7 +2,7 @@ name = "cms-cache"
 type = "javascript"
 
 # Supply Account ID in the CF_ACCOUNT_ID environment variable
-# Supply Zone    ID in the CF_ZONE_ID     environment variable
+# Supply Zone    ID in the CF_ZONE_ID    environment variable
 routes     = [
     "www.regalradio.net/cms/shows*",
     "www.regalradio.net/cms/date*",
