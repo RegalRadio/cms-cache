@@ -28,11 +28,11 @@ async function handleRequest(request) {
 
 async function isUrlCachable(url) {
     const urlObj = new URL(url);
-    return     url.pathname.startsWith("/cms/shows")
-            || url.pathname.startsWith("/cms/date")
-            || url.pathname.startsWith("/cms/persons")
-            || url.pathname.startsWith("/cms/schedule")
-            || url.pathname.startsWith("/cms/sponsors")
+    return     url.pathname.startsWith("/shows")
+            || url.pathname.startsWith("/date")
+            || url.pathname.startsWith("/persons")
+            || url.pathname.startsWith("/schedule")
+            || url.pathname.startsWith("/sponsors")
 }
 
 addEventListener("fetch", event => {
