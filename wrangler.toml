@@ -4,9 +4,9 @@ type = "javascript"
 # Supply Account ID in the CF_ACCOUNT_ID environment variable
 # Supply Zone    ID in the CF_ZONE_ID    environment variable
 routes     = [
-    "cms.regalradio.net/shows*",
-    "cms.regalradio.net/date*",
-    "cms.regalradio.net/sponsors*",
-    "cms.regalradio.net/schedule*",
-    "cms.regalradio.net/persons*"
+    "cms.regalradio.net/api/shows*",
+    "cms.regalradio.net/api/date*",
+    "cms.regalradio.net/api/sponsors*",
+    "cms.regalradio.net/api/schedule*",
+    "cms.regalradio.net/api/persons*"
 ]
