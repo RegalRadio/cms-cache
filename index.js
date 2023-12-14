@@ -8,12 +8,12 @@ async function handleRequest(request) {
         // If not in cache, get it from origin
         response = await fetch(request);
 
-        // If request is cachable, cache it for next time
+        // If request is cacheable, cache it for next time
         if (request.method === "GET" && isUrlCachable(request.url))
-            cache.put(request.url, response.clone());
+            await cache.put(request.url, response.clone());
     } else if (response.headers.get("Cache-Max-Age")) {
         // If serving a response from the cache, we need to update the Cache-Control headers, since Cloudflare
-        // will have overriden them with the domain-level default.  We can calculate the correct browser cache
+        // will have overridden them with the domain-level default.  We can calculate the correct browser cache
         // max age using the Cache-Max-Age provided by the Regal Radio CMS (which Cloudflare won't fiddle with
         // since it's not a standard cache header) and the age of the cached item. If there's no Cache-Max-Age
         // header, we skip this and assume the Cloudflare override is okay.
