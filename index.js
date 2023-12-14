@@ -5,12 +5,9 @@ async function handleRequest(request) {
     let response = await cache.match(request.url)
 
     if (!response) {
-        // If not in cache, get it from origin
+        // If not in cache, get it from origin and cache it for next time
         response = await fetch(request);
-
-        // If request is cacheable, cache it for next time
-        if (request.method === "GET" && isUrlCachable(request.url))
-            await cache.put(request.url, response.clone());
+        await cache.put(request.url, response.clone());
     } 
     
     /*  
@@ -25,15 +22,6 @@ async function handleRequest(request) {
     }
 
     return response;
-}
-
-async function isUrlCachable(url) {
-    const urlObj = new URL(url);
-    return     url.pathname.startsWith("/api/shows")
-            || url.pathname.startsWith("/api/date")
-            || url.pathname.startsWith("/api/persons")
-            || url.pathname.startsWith("/api/schedule")
-            || url.pathname.startsWith("/api/sponsors")
 }
 
 addEventListener("fetch", event => {
