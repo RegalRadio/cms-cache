@@ -1,5 +1,5 @@
 name = "cms-cache"
-type = "javascript"
+main = "index.js"
 
 # Supply Account ID in the CF_ACCOUNT_ID environment variable
 # Supply Zone    ID in the CF_ZONE_ID    environment variable
