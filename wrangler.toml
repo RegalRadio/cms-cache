@@ -1,5 +1,6 @@
 name = "cms-cache"
 main = "index.js"
+compatibility_date = "2023-12-14"
 
 # Supply Account ID in the CF_ACCOUNT_ID environment variable
 # Supply Zone    ID in the CF_ZONE_ID    environment variable
