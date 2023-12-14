@@ -17,7 +17,7 @@ async function handleRequest(request) {
     */
     if (response.headers.get("Cache-Max-Age")) {
         response = new Response(response.body, response); // Rebuild response object so headers are mutable.
-        let newMaxAge = parseInt(response.headers.get("Cache-Max-Age")) - (parseInt(response.headers.get("Age") || 0)
+        let newMaxAge = parseInt(response.headers.get("Cache-Max-Age")) - (parseInt(response.headers.get("Age")) || 0)
         response.headers.set("Cache-Control", "public, must-revalidate, max-age=" + newMaxAge);
     }
 
