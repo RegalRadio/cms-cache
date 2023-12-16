@@ -7,7 +7,9 @@ async function handleRequest(request) {
     if (!response) {
         // If not in cache, get it from origin and cache it for next time
         response = await fetch(request);
-        await cache.put(request.url, response.clone());
+        if (response.ok) {
+            await cache.put(request.url, response.clone());
+        }
     } 
     
     /*  
