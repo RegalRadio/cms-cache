@@ -1,6 +1,6 @@
 # CMS Cache
-This Cloudflare Worker is used to customise the Edge Cache behaviour for some API responses. It:
-1. Caches responses at Cloudflare's edge, where appropriate.
-2. [Updates the Cache-Control max-age](#max-age-adjustment) which is sent to the client, to take into account the age of the item cached at Cloudflare's edge.
+This Cloudflare Worker caches CMS responses at the edge.
 
-The Worker is deployed by a GitHub Action on push to `main` of this repo.
+By default, Cloudflare only caches HTTP responses with certain file extensions. This Worker lets us cache responses without these specified headers. It also lets us keep a specific Max-Age given by the CMS, instead of having Cloudflare override it with the domain-wide default as it would do if you added a Cache Everything page rule.
+
+Instead of supplying a `Cache-Control` header (which may be manipulated by Cloudflare at the edge), the CMS puts a max age in a `Cache-Max-Age` header. This Worker takes that `Cache-Max-Age` and fills it into a `Cache-Control` header.
