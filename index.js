@@ -20,6 +20,17 @@ async function handleRequest(request) {
     if (response.headers.get("Cache-Max-Age")) {
         response = new Response(response.body, response); // Rebuild response object so headers are mutable.
         let newMaxAge = parseInt(response.headers.get("Cache-Max-Age")) - (parseInt(response.headers.get("Age")) || 0)
+        
+        if (newMaxAge > 7200) {
+            console.log("Calculated unusually large cache max age: [", newMaxAge, "]. Cache-Max-Age header: [", response.headers.get("Cache-Max-Age"), "], Age header: [", response.headers.get("Age") , "]")
+            newMaxAge = 7200;
+        }
+        
+        if (newMaxAge < 0) {
+            console.log("Calculated unusually small cache max age: [", newMaxAge, "]. Cache-Max-Age header: [", response.headers.get("Cache-Max-Age"), "], Age header: [", response.headers.get("Age") , "]")
+            newMaxAge = 0;
+        }
+        
         response.headers.set("Cache-Control", "public, must-revalidate, max-age=" + newMaxAge);
     }
 
