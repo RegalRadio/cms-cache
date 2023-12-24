@@ -4,7 +4,7 @@ async function handleRequest(request) {
     // Check whether the value is already available in the cache
     let response = await cache.match(request.url)
 
-    if (!response || (parseInt(response.headers.get("Age")) || 0)) > (parseInt(response.headers.get("Cache-Max-Age")) || 0))) {
+    if (!response || (parseInt(response.headers.get("Age")) || 0) > (parseInt(response.headers.get("Cache-Max-Age")) || 0)) {
         // If not in cache, get it from origin and cache it for next time
         response = await fetch(request);
         if (response.ok) {
