@@ -19,5 +19,5 @@ jobs:
         with:
           apiToken:      ${{ secrets.CLOUDFLARE_API_TOKEN }}
         env:
-          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          CF_ZONE_ID:            ${{ secrets.CLOUDFLARE_ZONE_ID }}
+          CF_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CF_ZONE_ID:    ${{ secrets.CLOUDFLARE_ZONE_ID }}
